@@ -26,6 +26,10 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_MODULE_TAGS := optional
 
+ifeq ($(MULTI_LANG_ENGINE),REVERIE)
+LOCAL_CFLAGS += -DREVERIE
+endif
+
 LOCAL_SRC_FILES:= \
 	src/hb-blob.cc \
 	src/hb-buffer-serialize.cc \
