@@ -40,6 +40,10 @@
 #include "hb-unicode-private.hh"
 #include "hb-set-private.hh"
 
+#ifdef REVERIE
+#include "rev_rendering.h"
+#endif
+
 static hb_tag_t common_features[] = {
   HB_TAG('c','c','m','p'),
   HB_TAG('l','i','g','a'),
@@ -696,6 +700,11 @@ hb_ot_shape_internal (hb_ot_shape_context_t *c)
 
   _hb_buffer_allocate_unicode_vars (c->buffer);
 
+#ifdef REVERIE
+  if(shapeReverie(c->font,c->buffer)==0)
+  {
+#endif
+
   c->buffer->clear_output ();
 
   hb_set_unicode_props (c->buffer);
@@ -706,6 +715,10 @@ hb_ot_shape_internal (hb_ot_shape_context_t *c)
 
   hb_ot_substitute (c);
   hb_ot_position (c);
+
+#ifdef REVERIE
+  }
+#endif
 
   hb_ot_hide_default_ignorables (c);
 
