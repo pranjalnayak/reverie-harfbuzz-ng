@@ -88,10 +88,20 @@ HARFBUZZ_SRC_FILES = \
 include $(CLEAR_VARS)
 LOCAL_ARM_MODE := arm
 LOCAL_MODULE_TAGS := optional
+
+ifeq ($(MULTI_LANG_ENGINE),REVERIE)
+LOCAL_CFLAGS += -DREVERIE
+endif
+
 LOCAL_SRC_FILES:= \
 	$(HARFBUZZ_SRC_FILES) \
 	src/hb-icu.cc
 LOCAL_CPP_EXTENSION := .cc
+
+ifeq ($(MULTI_LANG_ENGINE),REVERIE)
+LOCAL_STATIC_LIBRARIES += revlib
+endif
+
 LOCAL_SHARED_LIBRARIES := \
 	libcutils \
 	libicuuc \
