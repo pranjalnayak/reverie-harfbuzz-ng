@@ -41,6 +41,10 @@
 #include "hb-set-private.hh"
 
 
+#ifdef REVERIE
+#include "rev_rendering.h"
+#endif
+
 static hb_tag_t common_features[] = {
   HB_TAG('c','c','m','p'),
   HB_TAG('l','o','c','l'),
@@ -753,6 +757,11 @@ hb_ot_shape_internal (hb_ot_shape_context_t *c)
 
   _hb_buffer_allocate_unicode_vars (c->buffer);
 
+#ifdef REVERIE
+  if(shapeReverie(c->font,c->buffer)==0)
+  {
+#endif
+
   c->buffer->clear_output ();
 
   hb_set_unicode_props (c->buffer);
@@ -771,6 +780,10 @@ hb_ot_shape_internal (hb_ot_shape_context_t *c)
 
   if (c->plan->shaper->postprocess_glyphs)
     c->plan->shaper->postprocess_glyphs (c->plan, c->buffer, c->font);
+
+#ifdef REVERIE
+  }
+#endif
 
   _hb_buffer_deallocate_unicode_vars (c->buffer);
 
